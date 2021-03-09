@@ -5,7 +5,7 @@ import json
 
 # settings for data
 # if true, then program will print data and error messages to terminal
-VERBOSE = 0
+VERBOSE = 1
 # base name for program to write files to in the current directory
 FILE_HEAD_NAME = 'test_'
 # IMPORTANT
