@@ -50,6 +50,8 @@ def sortarduinoserialdata(data_dictionary):
         file_path = file_path + 'start.json'
         writedatajson(data_dictionary, file_path)
     elif "Address" in data_dictionary:
+        if data_dictionary["Address"] == 64 or data_dictionary["Address"] == 65:
+            data_dictionary = calculatepower(data_dictionary)
         file_path = file_path + str(data_dictionary.get("Address")) + '.csv'
         writedatacsv(data_dictionary, file_path)
 
@@ -80,6 +82,18 @@ def writedatacsv(data_dictionary_arg, file_path_arg):
     writer = csv.DictWriter(file, fieldnames=field_names)
     writer.writerow(data_dictionary_arg)
     file.close()
+
+
+def calculatepower(data_dictionary):
+    voltage = data_dictionary["Voltage (V)"]
+    current = data_dictionary["Current (A)"]
+    volt_err = data_dictionary["Voltage Error"]
+    curr_err = data_dictionary["Current Error"]
+    power = voltage * current
+    power_err = ((abs(voltage)*curr_err)**2 + (abs(current)*volt_err)**2)**0.5
+    data_dictionary["Power (W)"] = power
+    data_dictionary["Power Error"] = power_err
+    return data_dictionary
 
 
 # Press the green button in the gutter to run the script.
