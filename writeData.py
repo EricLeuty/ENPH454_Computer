@@ -12,20 +12,20 @@ FILE_HEAD_NAME = 'test_'
 # path of port that arduino is connected to
 # Windows path is 'COM*' *is a number
 # Linux path is '/dev/tty*'
-ARDUINO_PORT = '/dev/ttyACM0'
+ARDUINO_PORT = 'COM3'
 
 
 # opens serial connection with arduino uno and
 # writes the data to files
 def readarduinoserial():
     try:
-        arduino = serial.Serial(port=ARDUINO_PORT, baudrate=9600, timeout=.1)
+        arduino = serial.Serial(port=ARDUINO_PORT, baudrate=115200, timeout=.1)
     except serial.serialutil.SerialException:
         print("Arduino not found on port : ", ARDUINO_PORT)
         return
 
     while True:
-        serial_data = arduino.readline().decode('utf-8')
+        serial_data = arduino.readline().decode('utf-8', errors='replace')
         if serial_data != '':
             if VERBOSE:
                 print(serial_data)
